@@ -55,6 +55,8 @@ public class PixarSplashCinematic : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 120;
+        QualitySettings.vSyncCount = 0;
         if (skipButton != null)
         {
             skipButton.onClick.RemoveAllListeners();
@@ -223,7 +225,8 @@ public class PixarSplashCinematic : MonoBehaviour
             t += Time.unscaledDeltaTime;
             stepTimer += Time.unscaledDeltaTime;
             float u = t / foodRunTime;
-            float curX = Mathf.Lerp(-480f, 40f, u);
+            float easeU = Mathf.SmoothStep(0f, 1f, u);
+            float curX = Mathf.Lerp(-480f, 40f, easeU);
             float hopY = -95f + Mathf.Abs(Mathf.Sin(u * Mathf.PI * 8f)) * 26f;
             foodRect.anchoredPosition = new Vector2(curX, hopY);
 

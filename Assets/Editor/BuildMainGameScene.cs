@@ -12,6 +12,7 @@ using UnityEngine.UI;
 public static class BuildMainGameScene
 {
     private static Sprite roundedFrameSprite;
+    private static Sprite arcadeButtonSprite;
     private static Font defaultArcadeFont;
     private static Font defaultBodyFont;
 
@@ -36,6 +37,7 @@ public static class BuildMainGameScene
         Debug.Log("[BuildMainGameScene] Starting full asset import, Splash, Home, Guidebook, Bottom Slime Tutorial, Power-Up Timers, Environment Banners & Scene assembly...");
 
         roundedFrameSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_rounded_frame_4px.png");
+        arcadeButtonSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_arcade_button_beveled.png");
 
         // 1. Ensure all sprites are imported with SpriteImportMode.Single & Point filter
         PixelArtImportSetup.ForceReimportAllSprites();
@@ -1431,18 +1433,12 @@ public static class BuildMainGameScene
             font,
             iconPlaySprite,
             "PLAY",
-            new Vector2(0f, -200f),
-            new Vector2(680f, 136f),
-            new Vector2(74f, 74f),
-            new Color(0.16f, 0.40f, 0.22f, 1f),
-            30
+            new Vector2(0f, -220f),
+            new Vector2(620f, 126f),
+            new Vector2(64f, 64f),
+            new Color(0.18f, 0.44f, 0.22f, 1f),
+            32
         );
-        Outline playOut = btnHomePlay.GetComponent<Outline>();
-        if (playOut != null)
-        {
-            playOut.effectColor = new Color(0.92f, 0.78f, 0.42f, 1f);
-            playOut.effectDistance = new Vector2(6f, -6f);
-        }
         uiMgr.btnHomePlay = btnHomePlay;
         comp.playButtonRect = btnHomePlay.GetComponent<RectTransform>();
 
@@ -1454,17 +1450,11 @@ public static class BuildMainGameScene
             guidebookIconSprite,
             "ALMANAC",
             new Vector2(0f, -370f),
-            new Vector2(560f, 106f),
-            new Vector2(64f, 64f),
-            new Color(0.16f, 0.28f, 0.38f, 1f),
-            26
+            new Vector2(620f, 114f),
+            new Vector2(58f, 58f),
+            new Color(0.16f, 0.30f, 0.44f, 1f),
+            28
         );
-        Outline guideOut = btnHomeGuide.GetComponent<Outline>();
-        if (guideOut != null)
-        {
-            guideOut.effectColor = new Color(0.76f, 0.84f, 0.88f, 1f);
-            guideOut.effectDistance = new Vector2(5f, -5f);
-        }
         uiMgr.btnHomeGuidebook = btnHomeGuide;
 
         // TIER 3: Floating EXIT Button (Warm Rustic Terracotta + Copper Border)
@@ -1475,21 +1465,11 @@ public static class BuildMainGameScene
             iconExitSprite,
             "EXIT",
             new Vector2(0f, -510f),
-            new Vector2(460f, 96f),
-            new Vector2(56f, 56f),
-            new Color(0.44f, 0.19f, 0.20f, 1f),
-            24
+            new Vector2(440f, 96f),
+            new Vector2(50f, 50f),
+            new Color(0.48f, 0.20f, 0.22f, 1f),
+            26
         );
-        Outline quitOut = btnHomeQuit.GetComponent<Outline>();
-        if (quitOut != null)
-        {
-            quitOut.effectColor = new Color(0.85f, 0.58f, 0.48f, 1f);
-            quitOut.effectDistance = new Vector2(4f, -4f);
-        }
-        {
-            quitOut.effectColor = new Color(0.96f, 0.45f, 0.45f, 1f);
-            quitOut.effectDistance = new Vector2(4f, -4f);
-        }
         uiMgr.btnHomeQuit = btnHomeQuit;
 
         uiMgr.homePanel = homePanel;
@@ -1585,7 +1565,7 @@ public static class BuildMainGameScene
             iconHomeSprite,
             "HOME",
             new Vector2(0f, -356f),
-            new Vector2(320f, 92f),
+            new Vector2(340f, 96f),
             new Vector2(52f, 52f),
             new Color(0.24f, 0.20f, 0.32f, 1f),
             30
@@ -2901,7 +2881,7 @@ public static class BuildMainGameScene
         tpRect.sizeDelta = new Vector2(792f, 135f);
 
         // 7. Close / Return Button
-        Button btnClose = CreateUIButton("Button_DetailClose", dpCard.transform, defaultBodyFont, "< RETURN TO ALMANAC", new Vector2(0f, -540f), new Vector2(580f, 92f), new Color(0.18f, 0.42f, 0.24f, 1f), 26);
+        Button btnClose = CreateUIButton("Button_DetailClose", dpCard.transform, defaultBodyFont, "< RETURN TO ALMANAC", new Vector2(0f, -540f), new Vector2(540f, 98f), new Color(0.18f, 0.44f, 0.24f, 1f), 26);
 
         uiMgr.almanacDetailModal = detailPanel;
         uiMgr.imgDetailArtwork = artImg;
@@ -3288,15 +3268,16 @@ public static class BuildMainGameScene
 
         Image img = btnObj.AddComponent<Image>();
         img.color = bgColor;
-        if (roundedFrameSprite != null)
+        if (arcadeButtonSprite != null)
+        {
+            img.sprite = arcadeButtonSprite;
+            img.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             img.sprite = roundedFrameSprite;
             img.type = Image.Type.Sliced;
         }
-
-        Outline outline = btnObj.AddComponent<Outline>();
-        outline.effectColor = new Color(0.10f, 0.06f, 0.03f, 0.95f);
-        outline.effectDistance = new Vector2(4f, -4f);
 
         Button btn = btnObj.AddComponent<Button>();
         btn.targetGraphic = img;
@@ -3304,16 +3285,18 @@ public static class BuildMainGameScene
 
         if (iconSprite != null)
         {
-            float iconX = -buttonSize.x * 0.5f + iconSize.x * 0.5f + 22f;
-            CreateUISpriteIcon("Icon_Graphic", btnObj.transform, iconSprite, new Vector2(iconX, 0f), iconSize);
+            float iconMargin = 28f;
+            float iconX = -buttonSize.x * 0.5f + iconSize.x * 0.5f + iconMargin;
+            CreateUISpriteIcon("Icon_Graphic", btnObj.transform, iconSprite, new Vector2(iconX, 2f), iconSize);
         }
 
         Text labelTxt = CreateUIText("Text_Label", btnObj.transform, font, label, fontSize, TextAnchor.MiddleCenter, Color.white);
         RectTransform lRect = labelTxt.GetComponent<RectTransform>();
         lRect.anchorMin = Vector2.zero;
         lRect.anchorMax = Vector2.one;
-        lRect.offsetMin = new Vector2(iconSprite != null ? (iconSize.x + 18f) : 0f, 0f);
-        lRect.offsetMax = new Vector2(-10f, 0f);
+        float symMargin = iconSprite != null ? (iconSize.x + 36f) : 20f;
+        lRect.offsetMin = new Vector2(symMargin, 4f);
+        lRect.offsetMax = new Vector2(-symMargin, 4f);
 
         return btn;
     }
@@ -3332,15 +3315,16 @@ public static class BuildMainGameScene
 
         Image img = btnObj.AddComponent<Image>();
         img.color = bgColor;
-        if (roundedFrameSprite != null)
+        if (arcadeButtonSprite != null)
+        {
+            img.sprite = arcadeButtonSprite;
+            img.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             img.sprite = roundedFrameSprite;
             img.type = Image.Type.Sliced;
         }
-
-        Outline outline = btnObj.AddComponent<Outline>();
-        outline.effectColor = new Color(0.10f, 0.06f, 0.03f, 0.95f);
-        outline.effectDistance = new Vector2(4f, -4f);
 
         Button btn = btnObj.AddComponent<Button>();
         btn.targetGraphic = img;
@@ -3348,7 +3332,7 @@ public static class BuildMainGameScene
 
         if (iconSprite != null)
         {
-            CreateUISpriteIcon("Icon_Graphic", btnObj.transform, iconSprite, new Vector2(0f, 18f), iconSize);
+            CreateUISpriteIcon("Icon_Graphic", btnObj.transform, iconSprite, new Vector2(0f, 20f), iconSize);
         }
 
         Text labelTxt = CreateUIText("Text_Label", btnObj.transform, font, caption, captionFontSize, TextAnchor.MiddleCenter, new Color(1f, 0.98f, 0.90f, 1f));
@@ -3356,7 +3340,7 @@ public static class BuildMainGameScene
         lRect.anchorMin = new Vector2(0f, 0f);
         lRect.anchorMax = new Vector2(1f, 0f);
         lRect.pivot = new Vector2(0.5f, 0f);
-        lRect.anchoredPosition = new Vector2(0f, 10f);
+        lRect.anchoredPosition = new Vector2(0f, 14f);
         lRect.sizeDelta = new Vector2(0f, 32f);
 
         return btn;
@@ -3374,15 +3358,16 @@ public static class BuildMainGameScene
 
         Image img = btnObj.AddComponent<Image>();
         img.color = bgColor;
-        if (roundedFrameSprite != null)
+        if (arcadeButtonSprite != null)
+        {
+            img.sprite = arcadeButtonSprite;
+            img.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             img.sprite = roundedFrameSprite;
             img.type = Image.Type.Sliced;
         }
-
-        Outline outline = btnObj.AddComponent<Outline>();
-        outline.effectColor = new Color(0.08f, 0.05f, 0.03f, 0.95f);
-        outline.effectDistance = new Vector2(5f, -5f);
 
         Button btn = btnObj.AddComponent<Button>();
         btn.targetGraphic = img;
@@ -3390,10 +3375,12 @@ public static class BuildMainGameScene
 
         if (playIcon != null)
         {
-            CreateUISpriteIcon("Icon_Play", btnObj.transform, playIcon, new Vector2(-size.x * 0.5f + 56f, 0f), new Vector2(54f, 54f));
+            float iconMargin = 32f;
+            float iconX = -size.x * 0.5f + 54f * 0.5f + iconMargin;
+            CreateUISpriteIcon("Icon_Play", btnObj.transform, playIcon, new Vector2(iconX, 4f), new Vector2(54f, 54f));
         }
 
-        Text titleTxt = CreateUIText("Text_ModeTitle", btnObj.transform, defaultBodyFont, title, 30, TextAnchor.MiddleCenter, Color.white);
+        Text titleTxt = CreateUIText("Text_ModeTitle", btnObj.transform, defaultBodyFont, title, 32, TextAnchor.MiddleCenter, Color.white);
         titleTxt.horizontalOverflow = HorizontalWrapMode.Wrap;
         titleTxt.verticalOverflow = VerticalWrapMode.Truncate;
         titleTxt.raycastTarget = false;
@@ -3401,13 +3388,13 @@ public static class BuildMainGameScene
         tRect.anchorMin = new Vector2(0.5f, 0.5f);
         tRect.anchorMax = new Vector2(0.5f, 0.5f);
         tRect.pivot = new Vector2(0.5f, 0.5f);
-        tRect.anchoredPosition = new Vector2(22f, 24f);
-        tRect.sizeDelta = new Vector2(size.x - 120f, 52f);
+        tRect.anchoredPosition = new Vector2(0f, 25f);
+        tRect.sizeDelta = new Vector2(size.x - 140f, 52f);
 
-        Text subTxt = CreateUIText("Text_ModeDesc", btnObj.transform, defaultBodyFont, subtitle, 25, TextAnchor.MiddleCenter, new Color(1f, 0.96f, 0.84f, 0.95f));
+        Text subTxt = CreateUIText("Text_ModeDesc", btnObj.transform, defaultBodyFont, subtitle, 24, TextAnchor.MiddleCenter, new Color(1f, 0.96f, 0.84f, 0.95f));
         subTxt.resizeTextForBestFit = true;
         subTxt.resizeTextMinSize = 20;
-        subTxt.resizeTextMaxSize = 25;
+        subTxt.resizeTextMaxSize = 24;
         subTxt.horizontalOverflow = HorizontalWrapMode.Wrap;
         subTxt.verticalOverflow = VerticalWrapMode.Truncate;
         subTxt.raycastTarget = false;
@@ -3415,8 +3402,8 @@ public static class BuildMainGameScene
         sRect.anchorMin = new Vector2(0.5f, 0.5f);
         sRect.anchorMax = new Vector2(0.5f, 0.5f);
         sRect.pivot = new Vector2(0.5f, 0.5f);
-        sRect.anchoredPosition = new Vector2(22f, -26f);
-        sRect.sizeDelta = new Vector2(size.x - 80f, 54f);
+        sRect.anchoredPosition = new Vector2(0f, -24f);
+        sRect.sizeDelta = new Vector2(size.x - 140f, 52f);
 
         return btn;
     }
@@ -3460,15 +3447,16 @@ public static class BuildMainGameScene
 
         Image img = btnObj.AddComponent<Image>();
         img.color = bgColor;
-        if (roundedFrameSprite != null)
+        if (arcadeButtonSprite != null)
+        {
+            img.sprite = arcadeButtonSprite;
+            img.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             img.sprite = roundedFrameSprite;
             img.type = Image.Type.Sliced;
         }
-
-        Outline outline = btnObj.AddComponent<Outline>();
-        outline.effectColor = new Color(0.1f, 0.06f, 0.03f, 0.95f);
-        outline.effectDistance = new Vector2(4f, -4f);
 
         Button btn = btnObj.AddComponent<Button>();
         btn.targetGraphic = img;
@@ -3478,8 +3466,8 @@ public static class BuildMainGameScene
         RectTransform lRect = labelTxt.GetComponent<RectTransform>();
         lRect.anchorMin = Vector2.zero;
         lRect.anchorMax = Vector2.one;
-        lRect.offsetMin = Vector2.zero;
-        lRect.offsetMax = Vector2.zero;
+        lRect.offsetMin = new Vector2(16f, 4f);
+        lRect.offsetMax = new Vector2(-16f, 4f);
 
         return btn;
     }
