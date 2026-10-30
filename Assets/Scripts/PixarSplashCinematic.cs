@@ -135,7 +135,7 @@ public class PixarSplashCinematic : MonoBehaviour
     public void UpdateBloopShadow(float x, float y, Vector3 localScale)
     {
         if (bloopShadow == null) return;
-        float floorY = -180f;
+        float floorY = -150f;
         float heightAboveFloor = Mathf.Max(0f, y - (-80f));
         float heightRatio = Mathf.Clamp01(heightAboveFloor / 140f);
 
@@ -157,7 +157,7 @@ public class PixarSplashCinematic : MonoBehaviour
     public void UpdateFoodShadow(float x, float y, Vector3 localScale)
     {
         if (foodShadow == null) return;
-        float floorY = -180f;
+        float floorY = -160f;
         float heightAboveFloor = Mathf.Max(0f, y - (-95f));
         float heightRatio = Mathf.Clamp01(heightAboveFloor / 30f);
 
@@ -700,7 +700,7 @@ public class PixarSplashCinematic : MonoBehaviour
         speechBubbleGroup.SetActive(false);
     }
 
-    private void SpawnSplashTrailDroplet(float x, float y = -180f)
+    private void SpawnSplashTrailDroplet(float x, float y = -150f)
     {
         if (slimeTrailSprite == null || stageContainer == null) return;
         GameObject dropObj = new GameObject("Splash_SlimeTrail");
