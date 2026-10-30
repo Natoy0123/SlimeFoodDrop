@@ -137,6 +137,9 @@ public static class BuildMainGameScene
         slimeCtrl.hurtFrames = LoadSpritesInFolder("Assets/Sprites/Slime/04-Hurt");
         slimeCtrl.deadFrames = LoadSpritesInFolder("Assets/Sprites/Slime/05-Dead");
         slimeCtrl.slimeTrailSprite = LoadSpriteEnsured("Assets/Sprites/Slime/slime_trail_droplet.png");
+        slimeCtrl.mouthOpenSprite = LoadSpriteEnsured("Assets/Sprites/Slime/slime_mouth_open.png");
+        slimeCtrl.mouthChewSprite = LoadSpriteEnsured("Assets/Sprites/Slime/slime_mouth_chew.png");
+        slimeCtrl.mouthSmileSprite = LoadSpriteEnsured("Assets/Sprites/Slime/slime_mouth_smile.png");
         if (slimeCtrl.idleFrames.Length > 0)
         {
             slimeSr.sprite = slimeCtrl.idleFrames[0];
@@ -681,6 +684,8 @@ public static class BuildMainGameScene
         slime.transform.position = new Vector3(0.35f, ResponsiveCamera.BottomBound + slime.bottomOffset, 0f);
         slime.TriggerEatEffect();
         slime.UpdatePowerUpAuraVisuals();
+        ui.ShowFoodRushBanner(15.0f);
+        ui.UpdateFoodRushHUD(14.8f, 15.0f);
 
         // Render Phone 9:16 (1080x1920) Theme 0 Gameplay with Power-Up Duration Bars & Environment Banner
         RenderViewportScreenshot(cam, respCam, 1080, 1920, Path.Combine(logDir, "Verify_Phone_9x16_Gameplay.png"));
@@ -704,6 +709,7 @@ public static class BuildMainGameScene
         Debug.Assert(tm.currentThemeIndex == 3, "[SP-10 FAIL] Reaching 420+ score must transition to Theme 3 (Twilight Citadel).");
         RenderViewportScreenshot(cam, respCam, 1080, 1920, Path.Combine(logDir, "Verify_Theme3_TwilightCitadel.png"));
 
+        ui.HideFoodRushBanner();
         // Clean preview items
         foreach (var p in previewItems)
         {
@@ -1082,6 +1088,73 @@ public static class BuildMainGameScene
         hsRect.pivot = new Vector2(1f, 0.5f);
         hsRect.anchoredPosition = new Vector2(-16f, 0f);
         uiMgr.btnHudSettings = btnHudSettings;
+
+        // Load Clock Dial and Needle Sprites for Food Rush HUD
+        Sprite clockFaceSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_clock_face.png");
+        Sprite clockHandSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_clock_hand.png");
+
+        // =========================================================================
+        // 1B. FOOD RUSH CLOCK WIDGET (Top-Left HUD below Hearts/Difficulty Badge)
+        // =========================================================================
+        GameObject foodRushClock = CreateUIElement("FoodRush_Clock_Widget", safeAreaObj.transform);
+        RectTransform frcRect = foodRushClock.GetComponent<RectTransform>();
+        frcRect.anchorMin = new Vector2(0f, 1f);
+        frcRect.anchorMax = new Vector2(0f, 1f);
+        frcRect.pivot = new Vector2(0f, 1f);
+        frcRect.anchoredPosition = new Vector2(24f, -170f);
+        frcRect.sizeDelta = new Vector2(188f, 62f);
+
+        Image frcBg = foodRushClock.AddComponent<Image>();
+        frcBg.color = new Color(0.12f, 0.09f, 0.18f, 0.94f);
+        frcBg.raycastTarget = false;
+        if (roundedFrameSprite != null)
+        {
+            frcBg.sprite = roundedFrameSprite;
+            frcBg.type = Image.Type.Sliced;
+        }
+        Outline frcOutline = foodRushClock.AddComponent<Outline>();
+        frcOutline.effectColor = new Color(1.0f, 0.82f, 0.28f, 0.95f);
+        frcOutline.effectDistance = new Vector2(2f, -2f);
+
+        // Circular Clock Face Dial (Left side of widget: center is 0, so -58f sits cleanly on left)
+        Image clockFaceImg = CreateUISpriteIcon("Clock_Face", foodRushClock.transform, clockFaceSprite, new Vector2(-58f, 0f), new Vector2(46f, 46f));
+        clockFaceImg.raycastTarget = false;
+
+        // Rotating Clock Hand Needle
+        GameObject clockHandObj = CreateUIElement("Clock_Hand", clockFaceImg.transform);
+        RectTransform handRect = clockHandObj.GetComponent<RectTransform>();
+        handRect.anchorMin = new Vector2(0.5f, 0.5f);
+        handRect.anchorMax = new Vector2(0.5f, 0.5f);
+        handRect.pivot = new Vector2(0.5f, 0.5f);
+        handRect.anchoredPosition = Vector2.zero;
+        handRect.sizeDelta = new Vector2(46f, 46f);
+        Image handImg = clockHandObj.AddComponent<Image>();
+        handImg.sprite = clockHandSprite;
+        handImg.preserveAspect = true;
+        handImg.raycastTarget = false;
+
+        // Header: "FOOD RUSH" (Right side of widget)
+        Text frBadge = CreateUIText("Text_RushBadge", foodRushClock.transform, defaultBodyFont, "FOOD RUSH", 14, TextAnchor.MiddleLeft, new Color(1.0f, 0.85f, 0.32f, 1f));
+        RectTransform frbRect = frBadge.GetComponent<RectTransform>();
+        frbRect.anchorMin = new Vector2(0.5f, 0.5f);
+        frbRect.anchorMax = new Vector2(0.5f, 0.5f);
+        frbRect.pivot = new Vector2(0.5f, 0.5f);
+        frbRect.anchoredPosition = new Vector2(26f, 11f);
+        frbRect.sizeDelta = new Vector2(108f, 20f);
+
+        // Digital timer countdown: "15.0s" (Right side below header)
+        Text frTimer = CreateUIText("Text_RushTimer", foodRushClock.transform, defaultBodyFont, "15.0s", 24, TextAnchor.MiddleLeft, new Color(1f, 0.98f, 0.85f, 1f));
+        RectTransform frtRect = frTimer.GetComponent<RectTransform>();
+        frtRect.anchorMin = new Vector2(0.5f, 0.5f);
+        frtRect.anchorMax = new Vector2(0.5f, 0.5f);
+        frtRect.pivot = new Vector2(0.5f, 0.5f);
+        frtRect.anchoredPosition = new Vector2(26f, -12f);
+        frtRect.sizeDelta = new Vector2(108f, 24f);
+
+        foodRushClock.SetActive(false);
+        uiMgr.foodRushClockWidget = foodRushClock;
+        uiMgr.foodRushClockHand = handRect;
+        uiMgr.textFoodRushClockTimer = frTimer;
 
         // =========================================================================
         // 1B. POWER-UP DURATION BARS CONTAINER (Directly Below TopBar_HUD)
@@ -2156,18 +2229,27 @@ public static class BuildMainGameScene
         sthRect.anchorMax = new Vector2(0.5f, 0.5f);
         sthRect.pivot = new Vector2(0.5f, 0.5f);
         sthRect.anchoredPosition = new Vector2(0f, 560f);
-        sthRect.sizeDelta = new Vector2(920f, 220f);
+        sthRect.sizeDelta = new Vector2(920f, 260f);
 
         Text studioTxt = CreateUIText("Text_StudioPresents", splashTopHeader.transform, font, "SLIME STUDIO PRESENTS", 18, TextAnchor.MiddleCenter, new Color(1f, 0.84f, 0.38f, 1f));
-        studioTxt.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 65f);
-        studioTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(760f, 38f);
+        studioTxt.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 96f);
+        studioTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(760f, 32f);
 
-        Text splashTitle = CreateUIText("Text_SplashTitle", splashTopHeader.transform, font, "SLIME FOOD DROP", 44, TextAnchor.MiddleCenter, new Color(0.52f, 0.98f, 0.65f, 1f));
-        splashTitle.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 0f);
-        splashTitle.GetComponent<RectTransform>().sizeDelta = new Vector2(880f, 80f);
+        // 16-Bit Retro Arcade Title Logo Graphic (Matching Home Screen design!)
+        GameObject titleGraphicObj = CreateUIElement("Image_SplashTitleLogo", splashTopHeader.transform);
+        RectTransform tgRect = titleGraphicObj.GetComponent<RectTransform>();
+        tgRect.anchorMin = new Vector2(0.5f, 0.5f);
+        tgRect.anchorMax = new Vector2(0.5f, 0.5f);
+        tgRect.pivot = new Vector2(0.5f, 0.5f);
+        tgRect.anchoredPosition = new Vector2(0f, 10f);
+        tgRect.sizeDelta = new Vector2(580f, 155f);
+        Image tgImg = titleGraphicObj.AddComponent<Image>();
+        tgImg.sprite = retroGameTitleLogo;
+        tgImg.preserveAspect = true;
+        tgImg.raycastTarget = false;
 
-        Text splashSub = CreateUIText("Text_SplashSubtitle", splashTopHeader.transform, defaultBodyFont, "CATCH THE TREATS • DODGE THE TOXINS!", 28, TextAnchor.MiddleCenter, new Color(0.82f, 0.94f, 1f, 0.95f));
-        splashSub.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -55f);
+        Text splashSub = CreateUIText("Text_SplashSubtitle", splashTopHeader.transform, defaultBodyFont, "CATCH THE TREATS • DODGE THE TOXINS!", 26, TextAnchor.MiddleCenter, new Color(0.82f, 0.94f, 1f, 0.95f));
+        splashSub.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -80f);
         splashSub.GetComponent<RectTransform>().sizeDelta = new Vector2(820f, 36f);
 
         // Stage Area Container (Centered vertically and horizontally on the screen device!)
@@ -2180,9 +2262,9 @@ public static class BuildMainGameScene
         stageRect.sizeDelta = new Vector2(920f, 600f);
         cinematic.stageContainer = stageRect;
 
-        // Spotlight Cone (Enlarged)
+        // Volumetric Theater Spotlight Cone with soft atmospheric falloff & floor illumination
         Image spotlightImg = CreateUISpriteIcon("Cinematic_Spotlight", stageObj.transform, spotlightSprite, new Vector2(0f, 50f), new Vector2(860f, 640f));
-        spotlightImg.color = new Color(1f, 0.96f, 0.82f, 0.35f);
+        spotlightImg.color = new Color(1f, 1f, 1f, 0.90f);
         cinematic.spotlightImage = spotlightImg;
 
         // Contact Shadows (Enlarged)
@@ -2335,7 +2417,7 @@ public static class BuildMainGameScene
         rRect.anchorMax = new Vector2(0.5f, 1f);
         rRect.pivot = new Vector2(0.5f, 1f);
         rRect.anchoredPosition = anchoredPos;
-        rRect.sizeDelta = new Vector2(760f, 44f);
+        rRect.sizeDelta = new Vector2(620f, 44f);
 
         Image rowBg = rowObj.AddComponent<Image>();
         rowBg.color = new Color(0.10f, 0.08f, 0.14f, 0.86f);
@@ -2350,7 +2432,7 @@ public static class BuildMainGameScene
         rowOut.effectDistance = new Vector2(3f, -3f);
 
         // Icon on Left
-        Image iconImg = CreateUISpriteIcon("Icon", rowObj.transform, iconSprite, new Vector2(-352f, 0f), new Vector2(34f, 34f));
+        Image iconImg = CreateUISpriteIcon("Icon", rowObj.transform, iconSprite, new Vector2(-282f, 0f), new Vector2(34f, 34f));
 
         // Bar Track
         GameObject trackObj = CreateUIElement("Bar_Track", rowObj.transform);
@@ -2386,8 +2468,11 @@ public static class BuildMainGameScene
             fImg.type = Image.Type.Sliced;
         }
 
-        // Label inside Bar
-        labelText = CreateUIText("Text_BarLabel", trackObj.transform, font, defaultLabel, 23, TextAnchor.MiddleCenter, Color.white);
+        // Label inside Bar (resizeTextForBestFit enabled for audit safety)
+        labelText = CreateUIText("Text_BarLabel", trackObj.transform, font, defaultLabel, 19, TextAnchor.MiddleCenter, Color.white);
+        labelText.resizeTextForBestFit = true;
+        labelText.resizeTextMinSize = 14;
+        labelText.resizeTextMaxSize = 20;
         RectTransform lRect = labelText.GetComponent<RectTransform>();
         lRect.anchorMin = Vector2.zero;
         lRect.anchorMax = Vector2.one;
