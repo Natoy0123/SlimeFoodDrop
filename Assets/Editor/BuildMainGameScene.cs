@@ -258,9 +258,9 @@ public static class BuildMainGameScene
                 bgmClip = bgmForest,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/parallax-forest-back-trees.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/parallax-forest-middle-trees.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/parallax-forest-front-trees.png"),
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_0_whispering_forest.png"),
+                    null,
+                    null,
                     AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/parallax-forest-lights.png")
                 },
                 layerTints = new Color[]
@@ -268,7 +268,7 @@ public static class BuildMainGameScene
                     Color.white,
                     Color.white,
                     Color.white,
-                    new Color(1f, 0.98f, 0.85f, 0.55f)
+                    new Color(1f, 0.98f, 0.85f, 0.45f)
                 }
             },
             new ThemeManager.EnvironmentTheme
@@ -280,10 +280,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmPlains,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme4_Plains/plains_0_sky.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme4_Plains/plains_1_mountains.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme4_Plains/plains_2_hills.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme4_Plains/plains_3_grass.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_1_breezy_plains.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             },
@@ -296,10 +296,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmMountain,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme1_Mountain/parallax-mountain-bg.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme1_Mountain/parallax-mountain-mountains.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme1_Mountain/parallax-mountain-trees.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme1_Mountain/parallax-mountain-foreground-trees.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_2_sunset_peaks.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             },
@@ -312,10 +312,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmTropical,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme5_Tropical/tropical_0_sky.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme5_Tropical/tropical_1_mountains.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme5_Tropical/tropical_2_hills.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme5_Tropical/tropical_3_palms.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_3_emerald_tropic.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             },
@@ -328,10 +328,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmDesert,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme6_Desert/desert_0_sky.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme6_Desert/desert_1_mountains.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme6_Desert/desert_2_dunes.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme6_Desert/desert_3_palms.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_4_sunbaked_dunes.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             },
@@ -344,10 +344,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmUnderwater,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme7_Underwater/underwater_0_deep.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme7_Underwater/underwater_1_sunrays.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme7_Underwater/underwater_2_corals.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme7_Underwater/underwater_3_reef.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_5_coral_abyss.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             },
@@ -360,10 +360,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmIndustrial,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme8_Industrial/industrial_0_sky.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme8_Industrial/industrial_1_far_buildings.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme8_Industrial/industrial_2_buildings.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme8_Industrial/industrial_3_foreground.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_6_steamworks_spire.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             },
@@ -376,10 +376,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmCave,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme9_Cave/cave_0_back.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme9_Cave/cave_1_far.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme9_Cave/cave_2_mid.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme9_Cave/cave_3_front.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_7_crystal_caverns.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             },
@@ -392,10 +392,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmCliffs,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme2_MagicCliffs/magic-cliffs-0-sky-sea.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme2_MagicCliffs/magic-cliffs-1-clouds.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme2_MagicCliffs/magic-cliffs-2-islands.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme2_MagicCliffs/magic-cliffs-3-foreground.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_8_sky_sanctuary.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             },
@@ -408,10 +408,10 @@ public static class BuildMainGameScene
                 bgmClip = bgmCitadel,
                 layers = new Sprite[]
                 {
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme3_NightCitadel/citadel-0-bg.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme3_NightCitadel/citadel-1-far.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme3_NightCitadel/citadel-2-mid.png"),
-                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/Theme3_NightCitadel/citadel-3-front.png")
+                    AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Background/HighResThemes/theme_9_frost_citadel.png"),
+                    null,
+                    null,
+                    null
                 },
                 layerTints = new Color[] { Color.white, Color.white, Color.white, Color.white }
             }
@@ -495,26 +495,26 @@ public static class BuildMainGameScene
         }
         RenderViewportScreenshot(cam, respCam, 1080, 1920, Path.Combine(logDir, "Verify_Phone_9x16_PixarSplashSpit.png"));
 
-        // Screenshot 1C: Pixar Splash Catch (Bloop chomping down directly over the food in the spotlight)
+        // Screenshot 1C: Pixar Splash Catch (Bloop gaping mouth catches food directly in midair above floor)
         if (ui.pixarSplashCinematic != null)
         {
-            ui.pixarSplashCinematic.bloopRect.anchoredPosition = new Vector2(40f, -80f);
+            ui.pixarSplashCinematic.bloopRect.anchoredPosition = new Vector2(-15f, -80f);
             ui.pixarSplashCinematic.bloopImage.sprite = ui.pixarSplashCinematic.slimeChompBite;
-            ui.pixarSplashCinematic.bloopRect.localScale = new Vector3(1.45f, 0.65f, 1f);
+            ui.pixarSplashCinematic.bloopRect.localScale = new Vector3(1.42f, 0.65f, 1f);
             ui.pixarSplashCinematic.foodImage.gameObject.SetActive(true);
             ui.pixarSplashCinematic.foodImage.sprite = ui.pixarSplashCinematic.foodPoisonReveal;
-            ui.pixarSplashCinematic.foodRect.anchoredPosition = new Vector2(40f, -95f);
+            ui.pixarSplashCinematic.foodRect.anchoredPosition = new Vector2(35f, -65f);
             ui.pixarSplashCinematic.foodRect.localScale = new Vector3(0.5f, 0.5f, 1f);
             if (ui.pixarSplashCinematic.foodShadow != null)
             {
                 ui.pixarSplashCinematic.foodShadow.gameObject.SetActive(true);
-                ui.pixarSplashCinematic.foodShadow.rectTransform.anchoredPosition = new Vector2(40f, -150f);
+                ui.pixarSplashCinematic.foodShadow.rectTransform.anchoredPosition = new Vector2(35f, -150f);
                 ui.pixarSplashCinematic.foodShadow.rectTransform.localScale = new Vector3(0.5f, 0.5f, 1f);
             }
             if (ui.pixarSplashCinematic.bloopShadow != null)
             {
-                ui.pixarSplashCinematic.bloopShadow.rectTransform.anchoredPosition = new Vector2(40f, -150f);
-                ui.pixarSplashCinematic.bloopShadow.rectTransform.localScale = new Vector3(1.45f, 0.69f, 1f);
+                ui.pixarSplashCinematic.bloopShadow.rectTransform.anchoredPosition = new Vector2(-15f, -150f);
+                ui.pixarSplashCinematic.bloopShadow.rectTransform.localScale = new Vector3(1.42f, 0.69f, 1f);
             }
             ui.pixarSplashCinematic.speechBubbleGroup.SetActive(false);
             ui.pixarSplashCinematic.projectileImage.gameObject.SetActive(false);
@@ -895,21 +895,19 @@ public static class BuildMainGameScene
         Sprite emotionAnnoyed = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/HomeSlimeEmotions/slime_emotion_annoyed.png");
         Sprite retroGameTitleLogo = LoadSpriteEnsured("Assets/Sprites/UI/retro_game_title_logo.png");
 
-        // Actual Stage Environment Theme Preview Sprites for the Almanac STAGES Tab (All 10 Stages!)
-        Sprite stageForestSprite = LoadSpriteEnsured("Assets/Sprites/Background/stage_forest_preview.png");
-        Sprite stagePlainsSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme4_Plains/stage_preview.png");
-        Sprite stagePeaksSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme1_Mountain/stage_preview.png");
-        Sprite stageTropicalSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme5_Tropical/stage_preview.png");
-        Sprite stageDesertSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme6_Desert/stage_preview.png");
-        Sprite stageUnderwaterSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme7_Underwater/stage_preview.png");
-        Sprite stageIndustrialSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme8_Industrial/stage_preview.png");
-        Sprite stageCaveSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme9_Cave/stage_preview.png");
-        Sprite stageCliffsSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme2_MagicCliffs/stage_preview.png");
-        Sprite stageCitadelSprite = LoadSpriteEnsured("Assets/Sprites/Background/Theme3_NightCitadel/stage_preview.png");
+        // Actual High-Definition Stage Environment Theme Preview Sprites for the Almanac STAGES Tab (All 10 Stages!)
         Sprite[] stagePreviews = new Sprite[]
         {
-            stageForestSprite, stagePlainsSprite, stagePeaksSprite, stageTropicalSprite, stageDesertSprite,
-            stageUnderwaterSprite, stageIndustrialSprite, stageCaveSprite, stageCliffsSprite, stageCitadelSprite
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_0.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_1.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_2.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_3.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_4.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_5.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_6.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_7.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_8.png"),
+            LoadSpriteEnsured("Assets/Sprites/Background/HighResThemes/stage_preview_9.png")
         };
 
         uiMgr.heartFull = heartFull;
@@ -2205,6 +2203,7 @@ public static class BuildMainGameScene
         Sprite slimeGagPuff2 = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/SplashCutscene/slime_gag_puff_2.png");
         Sprite slimeSpitLaunch = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/SplashCutscene/slime_spit_launch.png");
         Sprite slimeReliefSmile = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/SplashCutscene/slime_relief_smile.png");
+        Sprite slimeChewingPuff = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/SplashCutscene/slime_chewing_puff.png");
         Sprite spitProjectileSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/SplashCutscene/spit_poison_projectile.png");
         Sprite spotlightSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/SplashCutscene/stage_spotlight_cone.png");
         Sprite contactShadowSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/SplashCutscene/stage_contact_shadow.png");
@@ -2408,6 +2407,7 @@ public static class BuildMainGameScene
         cinematic.slimeGagPuff2 = slimeGagPuff2;
         cinematic.slimeSpitLaunch = slimeSpitLaunch;
         cinematic.slimeReliefSmile = slimeReliefSmile;
+        cinematic.slimeChewingPuff = slimeChewingPuff;
         cinematic.spitProjectileSprite = spitProjectileSprite;
         cinematic.spotlightSprite = spotlightSprite;
         cinematic.contactShadowSprite = contactShadowSprite;

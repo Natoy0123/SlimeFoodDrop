@@ -44,6 +44,7 @@ public class PixarSplashCinematic : MonoBehaviour
     public Sprite slimeGagPuff2;
     public Sprite slimeSpitLaunch;
     public Sprite slimeReliefSmile;
+    public Sprite slimeChewingPuff;
     public Sprite spitProjectileSprite;
     public Sprite spotlightSprite;
     public Sprite contactShadowSprite;
@@ -330,20 +331,24 @@ public class PixarSplashCinematic : MonoBehaviour
             yield return null;
         }
 
-        // --- ACT 3: The Grand Pounce — Bloop launches directly onto the food & chomps down! ---
+        // --- ACT 3: The Grand Pounce & Direct Mouth Catch ---
+        // Bloop launches toward food; mouth is on right side (~55px forward).
+        // Landing at x = -15f places the gaping mouth directly at x = +40f (food position).
         lt = 0f;
         leapDur = 0.44f;
         trailTimer = 0f;
         if (SoundManager.Instance != null) SoundManager.Instance.PlayJumpSound();
         bloopImage.sprite = slimeChompBite;
 
+        Vector2 foodInitPos = foodRect.anchoredPosition;
+
         while (lt < leapDur)
         {
             lt += Time.unscaledDeltaTime;
             trailTimer += Time.unscaledDeltaTime;
             float p = Mathf.Clamp01(lt / leapDur);
-            float curX = Mathf.Lerp(-120f, 40f, p);
-            float curY = -80f + Mathf.Sin(p * Mathf.PI) * 110f;
+            float curX = Mathf.Lerp(-120f, -15f, p);
+            float curY = -80f + Mathf.Sin(p * Mathf.PI) * 115f;
             bloopRect.anchoredPosition = new Vector2(curX, curY);
 
             if (trailTimer >= 0.08f)
@@ -354,57 +359,84 @@ public class PixarSplashCinematic : MonoBehaviour
 
             float stretch = 1f + Mathf.Sin(p * Mathf.PI) * 0.35f;
             bloopRect.localScale = new Vector3(1f / stretch, stretch, 1f);
-
             UpdateBloopShadow(curX, curY, bloopRect.localScale);
+
+            // In the final 30% of the leap, food is drawn upward straight into Bloop's gaping mouth
+            if (p > 0.70f)
+            {
+                float catchProg = (p - 0.70f) / 0.30f;
+                Vector2 mouthTarget = new Vector2(curX + 50f, curY - 10f);
+                foodRect.anchoredPosition = Vector2.Lerp(foodInitPos, mouthTarget, catchProg);
+                foodRect.localScale = Vector3.Lerp(Vector3.one, new Vector3(0.5f, 0.5f, 1f), catchProg);
+                UpdateFoodShadow(foodRect.anchoredPosition.x, foodRect.anchoredPosition.y, foodRect.localScale);
+            }
 
             yield return null;
         }
 
-        // Direct catch! Bloop lands squarely at (40f, -80f) squashing down over the food!
-        bloopRect.anchoredPosition = new Vector2(40f, -80f);
-        bloopRect.localScale = new Vector3(1.45f, 0.65f, 1f);
-        UpdateBloopShadow(40f, -80f, bloopRect.localScale);
+        // CHOMP! Food vanishes completely inside Bloop's mouth cavity!
+        foodImage.gameObject.SetActive(false);
+        if (foodShadow != null) foodShadow.gameObject.SetActive(false);
 
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.PlayEatFoodSound();
         }
 
-        // Food is sucked into Bloop's mouth shrinking to 0
-        float chompTime = 0.16f;
-        float ct = 0f;
-        Vector2 foodCatchPos = foodRect.anchoredPosition;
-        while (ct < chompTime)
+        // Juicy landing squash on floor at (-15f, -80f)
+        bloopRect.anchoredPosition = new Vector2(-15f, -80f);
+        bloopRect.localScale = new Vector3(1.42f, 0.65f, 1f);
+        UpdateBloopShadow(-15f, -80f, bloopRect.localScale);
+
+        yield return new WaitForSecondsRealtime(0.09f);
+
+        // Bloop snaps mouth shut: cheeks puff out with the food inside!
+        bloopImage.sprite = slimeChewingPuff != null ? slimeChewingPuff : slimeReliefSmile;
+
+        // 3 satisfying chewing chomps
+        for (int chew = 0; chew < 3; chew++)
         {
-            ct += Time.unscaledDeltaTime;
-            float cp = ct / chompTime;
-            foodRect.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, cp);
-            foodRect.anchoredPosition = Vector2.Lerp(foodCatchPos, new Vector2(40f, -70f), cp);
-            UpdateFoodShadow(foodRect.anchoredPosition.x, foodRect.anchoredPosition.y, foodRect.localScale);
+            float chewDur = 0.12f;
+            float ct = 0f;
+            while (ct < chewDur)
+            {
+                ct += Time.unscaledDeltaTime;
+                float cp = ct / chewDur;
+                float sx = 1f + Mathf.Sin(cp * Mathf.PI) * 0.18f;
+                float sy = 1f - Mathf.Sin(cp * Mathf.PI) * 0.14f;
+                bloopRect.localScale = new Vector3(sx, sy, 1f);
+                UpdateBloopShadow(-15f, -80f, bloopRect.localScale);
+                yield return null;
+            }
+        }
+
+        // Comical gulp swallow: body stretches upward as the lump travels down
+        float gulpDur = 0.20f;
+        float gt = 0f;
+        while (gt < gulpDur)
+        {
+            gt += Time.unscaledDeltaTime;
+            float gp = gt / gulpDur;
+            float sy = 1f + Mathf.Sin(gp * Mathf.PI) * 0.35f;
+            float sx = 1f - Mathf.Sin(gp * Mathf.PI) * 0.20f;
+            bloopRect.localScale = new Vector3(sx, sy, 1f);
+            UpdateBloopShadow(-15f, -80f, bloopRect.localScale);
             yield return null;
         }
-        foodImage.gameObject.SetActive(false);
-        if (foodShadow != null) foodShadow.gameObject.SetActive(false);
-
-        // Big comical gulp wobble
-        yield return new WaitForSecondsRealtime(0.08f);
-        bloopRect.localScale = new Vector3(0.82f, 1.35f, 1f); // Stretched tall gulping
-        UpdateBloopShadow(40f, -80f, bloopRect.localScale);
-        yield return new WaitForSecondsRealtime(0.12f);
-        bloopRect.localScale = new Vector3(1.22f, 0.85f, 1f);
-        UpdateBloopShadow(40f, -80f, bloopRect.localScale);
-        yield return new WaitForSecondsRealtime(0.10f);
         bloopRect.localScale = Vector3.one;
-        UpdateBloopShadow(40f, -80f, bloopRect.localScale);
 
-        // Bloop slides smoothly to center stage (0f, -80f)
+        // Content, relieved happy smile after swallowing
+        bloopImage.sprite = slimeReliefSmile;
+        yield return new WaitForSecondsRealtime(0.18f);
+
+        // Bloop slides smoothly from -15f to center stage (0f, -80f)
         float slideT = 0f;
-        float slideDur = 0.30f;
+        float slideDur = 0.28f;
         while (slideT < slideDur)
         {
             slideT += Time.unscaledDeltaTime;
             float sp = slideT / slideDur;
-            float cx = Mathf.Lerp(40f, 0f, sp);
+            float cx = Mathf.Lerp(-15f, 0f, sp);
             bloopRect.anchoredPosition = new Vector2(cx, -80f);
             UpdateBloopShadow(cx, -80f, bloopRect.localScale);
             yield return null;

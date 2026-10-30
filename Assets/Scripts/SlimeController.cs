@@ -104,7 +104,7 @@ public class SlimeController : MonoBehaviour
 
     private Coroutine mouthRoutine;
 
-    private readonly Vector3 mouthBaseOffset = new Vector3(-0.01f, -0.075f, 0f);
+    private readonly Vector3 mouthBaseOffset = new Vector3(-0.17f, -0.205f, 0f);
 
 
 
@@ -460,7 +460,7 @@ public class SlimeController : MonoBehaviour
 
         {
 
-            mouthRenderer.transform.localScale = Vector3.one * 0.45f;
+            mouthRenderer.transform.localScale = Vector3.one * 0.36f;
 
             mouthRenderer.gameObject.SetActive(false);
 
