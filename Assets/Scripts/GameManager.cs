@@ -331,19 +331,16 @@ public class GameManager : MonoBehaviour
 
     public void SelectEasyAndStart()
     {
-        forceShowTutorialNextStart = true;
         StartGameWithDifficulty(DifficultyLevel.Easy);
     }
 
     public void SelectMediumAndStart()
     {
-        forceShowTutorialNextStart = true;
         StartGameWithDifficulty(DifficultyLevel.Medium);
     }
 
     public void SelectHardAndStart()
     {
-        forceShowTutorialNextStart = true;
         StartGameWithDifficulty(DifficultyLevel.Hard);
     }
 
@@ -709,8 +706,6 @@ public class GameManager : MonoBehaviour
         if (currentScore > highScore)
         {
             highScore = currentScore;
-            PlayerPrefs.SetInt(HighScoreKey, highScore);
-            PlayerPrefs.Save();
             if (UIManager.Instance != null)
             {
                 UIManager.Instance.UpdateHighScore(highScore);
@@ -976,6 +971,19 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.SetLowLifeWarning(false);
             UIManager.Instance.ShowGameOver(currentScore, highScore);
+        }
+
+        // Persist high score on GameOver rather than on active scoring frames
+        PlayerPrefs.SetInt(HighScoreKey, highScore);
+        PlayerPrefs.Save();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            PlayerPrefs.SetInt(HighScoreKey, highScore);
+            PlayerPrefs.Save();
         }
     }
 

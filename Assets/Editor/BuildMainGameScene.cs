@@ -438,6 +438,7 @@ public static class BuildMainGameScene
 
         // 14. Run automated verification for all screens & features
         RunAutomatedVerification(cam, respCam, slimeCtrl, spawner, gm, tm, uiMgr, scenePath);
+        AuditAllUITexts();
     }
 
     private static void RunAutomatedVerification(Camera cam, ResponsiveCamera respCam, SlimeController slime, ItemSpawner spawner, GameManager gm, ThemeManager tm, UIManager ui, string scenePath)
@@ -930,7 +931,10 @@ public static class BuildMainGameScene
         borderEdges[2] = CreateEdgeStrip("Edge_Left", lowLifeRoot.transform, new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0f, 0.5f), Vector2.zero, new Vector2(28f, 0f), dangerRed);
         borderEdges[3] = CreateEdgeStrip("Edge_Right", lowLifeRoot.transform, new Vector2(1f, 0f), new Vector2(1f, 1f), new Vector2(1f, 0.5f), Vector2.zero, new Vector2(28f, 0f), dangerRed);
 
-        Text dangerBannerTxt = CreateUIText("Text_LowLifeBanner", lowLifeRoot.transform, font, "! DANGER: 1 HEART LEFT !", 32, TextAnchor.MiddleCenter, new Color(1f, 0.32f, 0.30f, 1f));
+        Text dangerBannerTxt = CreateUIText("Text_LowLifeBanner", lowLifeRoot.transform, defaultBodyFont, "! DANGER: 1 HEART LEFT !", 32, TextAnchor.MiddleCenter, new Color(1f, 0.32f, 0.30f, 1f));
+        dangerBannerTxt.resizeTextForBestFit = true;
+        dangerBannerTxt.resizeTextMinSize = 24;
+        dangerBannerTxt.resizeTextMaxSize = 32;
         RectTransform dbRect = dangerBannerTxt.GetComponent<RectTransform>();
         dbRect.anchorMin = new Vector2(0.5f, 0f);
         dbRect.anchorMax = new Vector2(0.5f, 0f);
@@ -1014,14 +1018,18 @@ public static class BuildMainGameScene
         scoreRect.sizeDelta = new Vector2(260f, 44f);
         uiMgr.textScore = scoreTxt;
 
-        // Stage / Theme Badge (Below Score, Top-Center)
-        Text themeBadgeTxt = CreateUIText("Text_ThemeBadge", topBar.transform, defaultBodyFont, "STAGE: WHISPERING FOREST", 25, TextAnchor.MiddleCenter, new Color(0.78f, 0.95f, 1f, 0.95f));
+        // Stage / Theme Badge (Below Score, Top-Center - 400px width for all 10 biomes)
+        Text themeBadgeTxt = CreateUIText("Text_ThemeBadge", topBar.transform, defaultBodyFont, "WHISPERING FOREST", 25, TextAnchor.MiddleCenter, new Color(0.78f, 0.95f, 1f, 0.95f));
+        themeBadgeTxt.resizeTextForBestFit = true;
+        themeBadgeTxt.resizeTextMinSize = 20;
+        themeBadgeTxt.resizeTextMaxSize = 25;
+        themeBadgeTxt.raycastTarget = false;
         RectTransform themeRect = themeBadgeTxt.GetComponent<RectTransform>();
         themeRect.anchorMin = new Vector2(0.5f, 0.5f);
         themeRect.anchorMax = new Vector2(0.5f, 0.5f);
         themeRect.pivot = new Vector2(0.5f, 0.5f);
         themeRect.anchoredPosition = new Vector2(0f, -36f);
-        themeRect.sizeDelta = new Vector2(300f, 32f);
+        themeRect.sizeDelta = new Vector2(400f, 36f);
         uiMgr.textThemeBadge = themeBadgeTxt;
 
         // High Score Text (Top-Right, left of Gear button with strict right alignment)
@@ -1459,7 +1467,7 @@ public static class BuildMainGameScene
             font,
             iconPlaySprite,
             "HARD MODE",
-            "Frenzy Speed  •  High Hazard Rate  •  +15 Pts / Catch",
+            "Frenzy Speed  •  High Hazards  •  +15 Pts / Catch",
             new Vector2(0f, -116f),
             new Vector2(760f, 132f),
             new Color(0.56f, 0.20f, 0.22f, 1f)
@@ -1739,8 +1747,11 @@ public static class BuildMainGameScene
         uiMgr.textCountdownNumber = cdNumTxt;
 
         Text cdSubTxt = CreateUIText("Text_CountdownSubtitle", cdPanel.transform, font, "GET READY TO SLIDE...", 38, TextAnchor.MiddleCenter, Color.white);
+        cdSubTxt.resizeTextForBestFit = true;
+        cdSubTxt.resizeTextMinSize = 28;
+        cdSubTxt.resizeTextMaxSize = 38;
         cdSubTxt.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -110f);
-        cdSubTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(760f, 70f);
+        cdSubTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(840f, 70f);
         uiMgr.textCountdownSubtitle = cdSubTxt;
 
         cdPanel.SetActive(false);
@@ -1859,7 +1870,7 @@ public static class BuildMainGameScene
         uiMgr.textSfxVolumeValue = sfxValTxt;
 
         // Row 3: Poison Haptics / Vibration Toggle Icon Button
-        Text vibTitleLbl = CreateUIText("Label_VibrationTitle", audioBox.transform, font, "POISON HAPTICS", 25, TextAnchor.MiddleLeft, new Color(1f, 0.94f, 0.78f, 1f));
+        Text vibTitleLbl = CreateUIText("Label_VibrationTitle", audioBox.transform, defaultBodyFont, "POISON HAPTICS", 25, TextAnchor.MiddleLeft, new Color(1f, 0.94f, 0.78f, 1f));
         vibTitleLbl.GetComponent<RectTransform>().anchoredPosition = new Vector2(-175f, -98f);
         vibTitleLbl.GetComponent<RectTransform>().sizeDelta = new Vector2(340f, 52f);
 
@@ -2423,10 +2434,13 @@ public static class BuildMainGameScene
         gbcOut.effectDistance = new Vector2(6f, -6f);
 
         Text gbTitle = CreateUIText("Text_GuidebookTitle", gbCard.transform, font, "SLIME ALMANAC & GUIDE", 36, TextAnchor.MiddleCenter, new Color(0.52f, 0.98f, 0.68f, 1f));
+        gbTitle.resizeTextForBestFit = true;
+        gbTitle.resizeTextMinSize = 28;
+        gbTitle.resizeTextMaxSize = 36;
         gbTitle.GetComponent<RectTransform>().anchoredPosition = new Vector2(-24f, 600f);
-        gbTitle.GetComponent<RectTransform>().sizeDelta = new Vector2(720f, 54f);
+        gbTitle.GetComponent<RectTransform>().sizeDelta = new Vector2(760f, 54f);
 
-        Text gbSub = CreateUIText("Text_GuidebookSub", gbCard.transform, defaultBodyFont, "TAP ANY CARD BELOW TO INSPECT FULL ITEM STATS, LORE & STRATEGY TIPS", 28, TextAnchor.MiddleCenter, new Color(1f, 0.88f, 0.48f, 1f));
+        Text gbSub = CreateUIText("Text_GuidebookSub", gbCard.transform, defaultBodyFont, "TAP ANY CARD FOR STATS & TIPS", 28, TextAnchor.MiddleCenter, new Color(1f, 0.88f, 0.48f, 1f));
         gbSub.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 544f);
         gbSub.GetComponent<RectTransform>().sizeDelta = new Vector2(860f, 40f);
 
@@ -2936,7 +2950,7 @@ public static class BuildMainGameScene
             rt.pivot = new Vector2(0.5f, 0.5f);
         }
         rt.anchoredPosition = anchoredPos;
-        rt.sizeDelta = new Vector2(856f, 150f);
+        rt.sizeDelta = new Vector2(856f, 160f);
 
         Image bg = card.AddComponent<Image>();
         bg.color = cardColor;
@@ -3019,19 +3033,27 @@ public static class BuildMainGameScene
         tcRect.anchoredPosition = new Vector2(textLeft + 428f, 0f);
         tcRect.sizeDelta = new Vector2(textWidth, 110f);
 
-        Text tTitle = CreateUIText("Text_EntryTitle", textContainer.transform, font, itemName, 20, TextAnchor.MiddleLeft, new Color(1f, 0.97f, 0.86f, 1f));
+        Text tTitle = CreateUIText("Text_EntryTitle", textContainer.transform, bodyFont, itemName, 26, TextAnchor.MiddleLeft, new Color(1f, 0.97f, 0.86f, 1f));
+        tTitle.resizeTextForBestFit = true;
+        tTitle.resizeTextMinSize = 22;
+        tTitle.resizeTextMaxSize = 26;
         tTitle.horizontalOverflow = HorizontalWrapMode.Wrap;
         tTitle.verticalOverflow = VerticalWrapMode.Truncate;
         tTitle.lineSpacing = 1.1f;
+        tTitle.raycastTarget = false;
         RectTransform titleRect = tTitle.GetComponent<RectTransform>();
         titleRect.anchorMin = new Vector2(0f, 0.5f);
         titleRect.anchorMax = new Vector2(1f, 1f);
         titleRect.offsetMin = new Vector2(0f, 0f);
         titleRect.offsetMax = new Vector2(0f, 0f);
 
-        Text tBadge = CreateUIText("Text_EntryBadge", textContainer.transform, bodyFont, categoryBadge, 20, TextAnchor.MiddleLeft, badgeColor);
+        Text tBadge = CreateUIText("Text_EntryBadge", textContainer.transform, bodyFont, categoryBadge, 24, TextAnchor.MiddleLeft, badgeColor);
+        tBadge.resizeTextForBestFit = true;
+        tBadge.resizeTextMinSize = 20;
+        tBadge.resizeTextMaxSize = 24;
         tBadge.horizontalOverflow = HorizontalWrapMode.Wrap;
         tBadge.verticalOverflow = VerticalWrapMode.Truncate;
+        tBadge.raycastTarget = false;
         RectTransform badgeRect = tBadge.GetComponent<RectTransform>();
         badgeRect.anchorMin = new Vector2(0f, 0f);
         badgeRect.anchorMax = new Vector2(1f, 0.5f);
@@ -3268,6 +3290,9 @@ public static class BuildMainGameScene
         tRect.sizeDelta = new Vector2(size.x - 120f, 52f);
 
         Text subTxt = CreateUIText("Text_ModeDesc", btnObj.transform, defaultBodyFont, subtitle, 25, TextAnchor.MiddleCenter, new Color(1f, 0.96f, 0.84f, 0.95f));
+        subTxt.resizeTextForBestFit = true;
+        subTxt.resizeTextMinSize = 20;
+        subTxt.resizeTextMaxSize = 25;
         subTxt.horizontalOverflow = HorizontalWrapMode.Wrap;
         subTxt.verticalOverflow = VerticalWrapMode.Truncate;
         subTxt.raycastTarget = false;
@@ -3276,7 +3301,7 @@ public static class BuildMainGameScene
         sRect.anchorMax = new Vector2(0.5f, 0.5f);
         sRect.pivot = new Vector2(0.5f, 0.5f);
         sRect.anchoredPosition = new Vector2(22f, -26f);
-        sRect.sizeDelta = new Vector2(size.x - 120f, 48f);
+        sRect.sizeDelta = new Vector2(size.x - 80f, 54f);
 
         return btn;
     }
@@ -3370,4 +3395,42 @@ public static class BuildMainGameScene
         }
         return sprites.ToArray();
     }
+
+    [MenuItem("SlimeFoodDrop/Audit All UI Texts")]
+    public static void AuditAllUITexts()
+    {
+        Text[] allTexts = Object.FindObjectsByType<Text>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        int overflowCount = 0;
+        int checkedCount = 0;
+
+        foreach (Text t in allTexts)
+        {
+            if (t == null) continue;
+            checkedCount++;
+            RectTransform rt = t.GetComponent<RectTransform>();
+            if (rt == null) continue;
+
+            float w = rt.rect.width;
+            float h = rt.rect.height;
+
+            if (w <= 0.1f || h <= 0.1f) continue;
+
+            // If best-fit is ON, Unity guarantees it scales down to minSize
+            if (t.resizeTextForBestFit) continue;
+
+            if (t.horizontalOverflow == HorizontalWrapMode.Overflow && t.preferredWidth > w + 1f)
+            {
+                Debug.LogWarning($"[UI AUDIT OVERFLOW] {t.gameObject.name}: preferred width {t.preferredWidth:F1} > rect width {w:F1} (Text: '{t.text}')");
+                overflowCount++;
+            }
+            else if (t.verticalOverflow == VerticalWrapMode.Truncate && t.preferredHeight > h + 1f)
+            {
+                Debug.LogWarning($"[UI AUDIT TRUNCATE] {t.gameObject.name}: preferred height {t.preferredHeight:F1} > rect height {h:F1} (Text: '{t.text}')");
+                overflowCount++;
+            }
+        }
+
+        Debug.Log($"[UI AUDIT COMPLETE] Checked {checkedCount} Text components. Flagged overflows: {overflowCount}.");
+    }
+
 }

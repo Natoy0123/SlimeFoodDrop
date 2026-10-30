@@ -28,3 +28,6 @@ Recordings/
 # OS generated
 .DS_Store
 Thumbs.db
+
+.utmp/
+SourceArchives/

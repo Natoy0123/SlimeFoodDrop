@@ -1576,7 +1576,7 @@ public class UIManager : MonoBehaviour
     {
         if (textThemeBadge != null && !string.IsNullOrEmpty(themeName))
         {
-            textThemeBadge.text = $"STAGE: {themeName.ToUpperInvariant()}";
+            textThemeBadge.text = themeName.ToUpperInvariant();
         }
     }
 
@@ -1749,15 +1749,15 @@ public class UIManager : MonoBehaviour
 
         UpdateSinglePowerUpBar(
             magnetBarRow, magnetBarFillRect, textMagnetBarLabel,
-            showMagnet, magnetRem, magnetMax, $"MAGNET  {magnetRem:0.0}s");
+            showMagnet, magnetRem, magnetMax, $"MAGNET {magnetRem:0.0}s");
 
         UpdateSinglePowerUpBar(
             shieldBarRow, shieldBarFillRect, textShieldBarLabel,
-            showShield, shieldRem, shieldMax, $"BARRIER SHIELD  {shieldRem:0.0}s (1 HIT)");
+            showShield, shieldRem, shieldMax, $"BARRIER {shieldRem:0.0}s");
 
         UpdateSinglePowerUpBar(
             timeSlowBarRow, timeSlowBarFillRect, textTimeSlowBarLabel,
-            showTimeSlow, timeSlowRem, timeSlowMax, $"TIME-SLOW  {timeSlowRem:0.0}s (50%)");
+            showTimeSlow, timeSlowRem, timeSlowMax, $"SLOW-MO {timeSlowRem:0.0}s");
     }
 
     private void UpdateSinglePowerUpBar(
