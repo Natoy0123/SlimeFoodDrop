@@ -465,7 +465,8 @@ public static class BuildMainGameScene
                 if (ui.pixarSplashCinematic.bloopShadow != null)
                 {
                     ui.pixarSplashCinematic.bloopShadow.gameObject.SetActive(true);
-                    ui.pixarSplashCinematic.bloopShadow.rectTransform.anchoredPosition = new Vector2(0f, -115f);
+                    ui.pixarSplashCinematic.bloopShadow.rectTransform.anchoredPosition = new Vector2(0f, -180f);
+                    ui.pixarSplashCinematic.bloopShadow.rectTransform.localScale = Vector3.one;
                 }
                 ui.pixarSplashCinematic.bloopImage.sprite = ui.pixarSplashCinematic.slimeTurnLookUser;
                 ui.pixarSplashCinematic.foodImage.gameObject.SetActive(false);
@@ -481,6 +482,11 @@ public static class BuildMainGameScene
         {
             ui.pixarSplashCinematic.bloopImage.sprite = ui.pixarSplashCinematic.slimeSpitLaunch;
             ui.pixarSplashCinematic.bloopRect.localScale = new Vector3(0.70f, 1.48f, 1f);
+            if (ui.pixarSplashCinematic.bloopShadow != null)
+            {
+                ui.pixarSplashCinematic.bloopShadow.rectTransform.anchoredPosition = new Vector2(0f, -180f);
+                ui.pixarSplashCinematic.bloopShadow.rectTransform.localScale = new Vector3(0.70f, 1.22f, 1f);
+            }
             ui.pixarSplashCinematic.ShowSpeechBubble("PFFFT!!", new Vector2(0f, 85f));
             ui.pixarSplashCinematic.projectileImage.gameObject.SetActive(true);
             ui.pixarSplashCinematic.projectileRect.anchoredPosition = new Vector2(240f, 60f);
@@ -500,7 +506,13 @@ public static class BuildMainGameScene
             if (ui.pixarSplashCinematic.foodShadow != null)
             {
                 ui.pixarSplashCinematic.foodShadow.gameObject.SetActive(true);
-                ui.pixarSplashCinematic.foodShadow.rectTransform.anchoredPosition = new Vector2(40f, -115f);
+                ui.pixarSplashCinematic.foodShadow.rectTransform.anchoredPosition = new Vector2(40f, -180f);
+                ui.pixarSplashCinematic.foodShadow.rectTransform.localScale = new Vector3(0.5f, 0.5f, 1f);
+            }
+            if (ui.pixarSplashCinematic.bloopShadow != null)
+            {
+                ui.pixarSplashCinematic.bloopShadow.rectTransform.anchoredPosition = new Vector2(40f, -180f);
+                ui.pixarSplashCinematic.bloopShadow.rectTransform.localScale = new Vector3(1.45f, 0.69f, 1f);
             }
             ui.pixarSplashCinematic.speechBubbleGroup.SetActive(false);
             ui.pixarSplashCinematic.projectileImage.gameObject.SetActive(false);
@@ -2271,26 +2283,26 @@ public static class BuildMainGameScene
         stageRect.anchorMin = new Vector2(0.5f, 0.5f);
         stageRect.anchorMax = new Vector2(0.5f, 0.5f);
         stageRect.pivot = new Vector2(0.5f, 0.5f);
-        stageRect.anchoredPosition = new Vector2(0f, 15f);
+        stageRect.anchoredPosition = new Vector2(0f, -240f);
         stageRect.sizeDelta = new Vector2(920f, 600f);
         cinematic.stageContainer = stageRect;
 
         // 1. Theater Stage Wooden Floor Platform (Solid ground for Bloop and Food to stand and run on!)
-        Image stageFloorImg = CreateUISpriteIcon("Stage_Floor", stageObj.transform, stageFloorSprite, new Vector2(0f, -205f), new Vector2(920f, 180f));
+        Image stageFloorImg = CreateUISpriteIcon("Stage_Floor", stageObj.transform, stageFloorSprite, new Vector2(0f, -220f), new Vector2(960f, 200f));
         stageFloorImg.raycastTarget = false;
 
         // 2. Volumetric Theater Spotlight Cone (Shining down onto the wooden stage floor)
-        Image spotlightImg = CreateUISpriteIcon("Cinematic_Spotlight", stageObj.transform, spotlightSprite, new Vector2(0f, 65f), new Vector2(860f, 620f));
+        Image spotlightImg = CreateUISpriteIcon("Cinematic_Spotlight", stageObj.transform, spotlightSprite, new Vector2(0f, 120f), new Vector2(880f, 780f));
         spotlightImg.color = new Color(1f, 1f, 1f, 0.95f);
         cinematic.spotlightImage = spotlightImg;
 
-        // 3. Contact Shadows (Cast with rich dark contrast directly on top of the illuminated stage floor!)
-        Image foodShadow = CreateUISpriteIcon("Shadow_Food", stageObj.transform, contactShadowSprite, new Vector2(-460f, -115f), new Vector2(140f, 44f));
+        // 3. Contact Shadows (Anchored to wooden plank surface at y = -180f with dynamic squash/stretch scale tracking)
+        Image foodShadow = CreateUISpriteIcon("Shadow_Food", stageObj.transform, contactShadowSprite, new Vector2(-460f, -180f), new Vector2(140f, 44f));
         foodShadow.color = new Color(0.08f, 0.05f, 0.12f, 0.85f);
         foodShadow.gameObject.SetActive(false);
         cinematic.foodShadow = foodShadow;
 
-        Image bloopShadow = CreateUISpriteIcon("Shadow_Bloop", stageObj.transform, contactShadowSprite, new Vector2(-550f, -115f), new Vector2(280f, 74f));
+        Image bloopShadow = CreateUISpriteIcon("Shadow_Bloop", stageObj.transform, contactShadowSprite, new Vector2(-550f, -180f), new Vector2(280f, 74f));
         bloopShadow.color = new Color(0.08f, 0.05f, 0.12f, 0.88f);
         cinematic.bloopShadow = bloopShadow;
 
