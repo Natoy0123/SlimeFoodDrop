@@ -13,6 +13,9 @@ public static class BuildMainGameScene
 {
     private static Sprite roundedFrameSprite;
     private static Sprite arcadeButtonSprite;
+    private static Sprite masterContainerSprite;
+    private static Sprite recessedWellSprite;
+    private static Sprite segmentedTabChipSprite;
     private static Font defaultArcadeFont;
     private static Font defaultBodyFont;
 
@@ -38,6 +41,9 @@ public static class BuildMainGameScene
 
         roundedFrameSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_rounded_frame_4px.png");
         arcadeButtonSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_arcade_button_beveled.png");
+        masterContainerSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_container_master_frame.png");
+        recessedWellSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_container_recessed_well.png");
+        segmentedTabChipSprite = LoadSpriteEnsured("Assets/Sprites/UI/ui_segmented_tab_chip.png");
 
         // 1. Ensure all sprites are imported with SpriteImportMode.Single & Point filter
         PixelArtImportSetup.ForceReimportAllSprites();
@@ -1494,16 +1500,21 @@ public static class BuildMainGameScene
         diffCardRect.sizeDelta = new Vector2(880f, 960f);
 
         Image diffCardBg = diffCard.AddComponent<Image>();
-        diffCardBg.color = new Color(0.14f, 0.10f, 0.18f, 0.97f);
-        if (roundedFrameSprite != null)
+        diffCardBg.color = Color.white;
+        if (masterContainerSprite != null)
+        {
+            diffCardBg.sprite = masterContainerSprite;
+            diffCardBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             diffCardBg.sprite = roundedFrameSprite;
             diffCardBg.type = Image.Type.Sliced;
         }
 
         Outline diffCardOutline = diffCard.AddComponent<Outline>();
-        diffCardOutline.effectColor = new Color(0.95f, 0.76f, 0.32f, 1f);
-        diffCardOutline.effectDistance = new Vector2(6f, -6f);
+        diffCardOutline.effectColor = new Color(0.05f, 0.04f, 0.08f, 0.75f);
+        diffCardOutline.effectDistance = new Vector2(4f, -4f);
 
         Text chooseHeaderTxt = CreateUIText("Text_ChooseHeader", diffCard.transform, font, "SELECT DIFFICULTY", 34, TextAnchor.MiddleCenter, new Color(0.52f, 0.98f, 0.68f, 1f));
         chooseHeaderTxt.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 392f);
@@ -1611,16 +1622,21 @@ public static class BuildMainGameScene
         tdRect.sizeDelta = new Vector2(940f, 380f);
 
         Image tdBg = tutDialogBox.AddComponent<Image>();
-        tdBg.color = new Color(0.11f, 0.10f, 0.18f, 0.97f);
+        tdBg.color = Color.white;
         tdBg.raycastTarget = false;
-        if (roundedFrameSprite != null)
+        if (masterContainerSprite != null)
+        {
+            tdBg.sprite = masterContainerSprite;
+            tdBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             tdBg.sprite = roundedFrameSprite;
             tdBg.type = Image.Type.Sliced;
         }
         Outline tdOutline = tutDialogBox.AddComponent<Outline>();
-        tdOutline.effectColor = new Color(0.38f, 0.88f, 1.0f, 1f);
-        tdOutline.effectDistance = new Vector2(5f, -5f);
+        tdOutline.effectColor = new Color(0.05f, 0.04f, 0.08f, 0.75f);
+        tdOutline.effectDistance = new Vector2(4f, -4f);
 
         // Header Accent Strip inside Top of Dialog Box
         GameObject tdHeaderStrip = CreateUIElement("Dialog_HeaderStrip", tutDialogBox.transform);
@@ -1867,15 +1883,20 @@ public static class BuildMainGameScene
         uiMgr.settingsCardRect = scCardRect;
 
         Image setCardBg = setCard.AddComponent<Image>();
-        setCardBg.color = new Color(0.14f, 0.11f, 0.19f, 0.98f);
-        if (roundedFrameSprite != null)
+        setCardBg.color = Color.white;
+        if (masterContainerSprite != null)
+        {
+            setCardBg.sprite = masterContainerSprite;
+            setCardBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             setCardBg.sprite = roundedFrameSprite;
             setCardBg.type = Image.Type.Sliced;
         }
         Outline setCardOutline = setCard.AddComponent<Outline>();
-        setCardOutline.effectColor = new Color(0.95f, 0.76f, 0.32f, 1f);
-        setCardOutline.effectDistance = new Vector2(6f, -6f);
+        setCardOutline.effectColor = new Color(0.05f, 0.04f, 0.08f, 0.75f);
+        setCardOutline.effectDistance = new Vector2(4f, -4f);
 
         // Header Title + Top-Right Close Icon Button
         Text setTitleTxt = CreateUIText("Text_SettingsTitle", setCard.transform, font, "GAME PAUSED", 36, TextAnchor.MiddleCenter, new Color(0.52f, 0.98f, 0.68f, 1f));
@@ -1903,16 +1924,21 @@ public static class BuildMainGameScene
         uiMgr.settingsAudioBoxRect = abRect;
 
         Image abBg = audioBox.AddComponent<Image>();
-        abBg.color = new Color(0.09f, 0.07f, 0.13f, 0.92f);
+        abBg.color = Color.white;
         abBg.raycastTarget = false;
-        if (roundedFrameSprite != null)
+        if (recessedWellSprite != null)
+        {
+            abBg.sprite = recessedWellSprite;
+            abBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             abBg.sprite = roundedFrameSprite;
             abBg.type = Image.Type.Sliced;
         }
         Outline abOut = audioBox.AddComponent<Outline>();
-        abOut.effectColor = new Color(0.30f, 0.68f, 0.90f, 0.45f);
-        abOut.effectDistance = new Vector2(2f, -2f);
+        abOut.effectColor = new Color(0.05f, 0.04f, 0.09f, 0.5f);
+        abOut.effectDistance = new Vector2(1f, -1f);
 
         // Row 1: BGM Volume (28px horizontal gaps between [-] [100%] [+])
         Text bgmLbl = CreateUIText("Label_BgmVolume", audioBox.transform, font, "MUSIC (BGM)", 26, TextAnchor.MiddleLeft, new Color(1f, 0.94f, 0.78f, 1f));
@@ -2003,10 +2029,10 @@ public static class BuildMainGameScene
             font,
             iconRestartSprite,
             "RESTART",
-            new Vector2(-294f, -18f),
-            new Vector2(164f, 144f),
-            new Vector2(64f, 64f),
-            new Color(0.68f, 0.44f, 0.16f, 1f),
+            new Vector2(-285f, -20f),
+            new Vector2(164f, 160f),
+            new Vector2(50f, 50f),
+            new Color(0.92f, 0.58f, 0.14f, 1f),
             20
         );
         uiMgr.btnSettingsRestart = btnSetRestart;
@@ -2017,10 +2043,10 @@ public static class BuildMainGameScene
             font,
             guidebookIconSprite,
             "ALMANAC",
-            new Vector2(-98f, -18f),
-            new Vector2(164f, 144f),
-            new Vector2(64f, 64f),
-            new Color(0.16f, 0.28f, 0.38f, 1f),
+            new Vector2(-95f, -20f),
+            new Vector2(164f, 160f),
+            new Vector2(50f, 50f),
+            new Color(0.16f, 0.58f, 0.90f, 1f),
             20
         );
         uiMgr.btnSettingsGuidebook = btnSetGuide;
@@ -2031,10 +2057,10 @@ public static class BuildMainGameScene
             font,
             iconTutorialSprite,
             "TUTORIAL",
-            new Vector2(98f, -18f),
-            new Vector2(164f, 144f),
-            new Vector2(64f, 64f),
-            new Color(0.32f, 0.26f, 0.44f, 1f),
+            new Vector2(95f, -20f),
+            new Vector2(164f, 160f),
+            new Vector2(50f, 50f),
+            new Color(0.52f, 0.36f, 0.82f, 1f),
             20
         );
         uiMgr.btnSettingsReplayTutorial = btnReplayTut;
@@ -2045,10 +2071,10 @@ public static class BuildMainGameScene
             font,
             iconHomeSprite,
             "HOME",
-            new Vector2(294f, -18f),
-            new Vector2(164f, 144f),
-            new Vector2(64f, 64f),
-            new Color(0.24f, 0.20f, 0.32f, 1f),
+            new Vector2(285f, -20f),
+            new Vector2(164f, 160f),
+            new Vector2(50f, 50f),
+            new Color(0.44f, 0.34f, 0.64f, 1f),
             20
         );
         uiMgr.btnSettingsHome = btnSetHome;
@@ -2078,16 +2104,21 @@ public static class BuildMainGameScene
         dlgRect.sizeDelta = new Vector2(860f, 840f);
 
         Image dlgBg = dialogBox.AddComponent<Image>();
-        dlgBg.color = new Color(0.15f, 0.11f, 0.19f, 0.98f);
-        if (roundedFrameSprite != null)
+        dlgBg.color = Color.white;
+        if (masterContainerSprite != null)
+        {
+            dlgBg.sprite = masterContainerSprite;
+            dlgBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             dlgBg.sprite = roundedFrameSprite;
             dlgBg.type = Image.Type.Sliced;
         }
 
         Outline dlgOutline = dialogBox.AddComponent<Outline>();
-        dlgOutline.effectColor = new Color(0.95f, 0.72f, 0.30f, 1f);
-        dlgOutline.effectDistance = new Vector2(6f, -6f);
+        dlgOutline.effectColor = new Color(0.05f, 0.04f, 0.08f, 0.75f);
+        dlgOutline.effectDistance = new Vector2(4f, -4f);
 
         Text titleTxt = CreateUIText("Text_Title", dialogBox.transform, font, "GAME OVER", 38, TextAnchor.MiddleCenter, new Color(1f, 0.42f, 0.38f, 1f));
         titleTxt.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 315f);
@@ -2099,16 +2130,21 @@ public static class BuildMainGameScene
         sbRect.anchoredPosition = new Vector2(0f, 145f);
         sbRect.sizeDelta = new Vector2(720f, 174f);
         Image sbBg = scoreBox.AddComponent<Image>();
-        sbBg.color = new Color(0.09f, 0.07f, 0.13f, 0.92f);
+        sbBg.color = Color.white;
         sbBg.raycastTarget = false;
-        if (roundedFrameSprite != null)
+        if (recessedWellSprite != null)
+        {
+            sbBg.sprite = recessedWellSprite;
+            sbBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             sbBg.sprite = roundedFrameSprite;
             sbBg.type = Image.Type.Sliced;
         }
         Outline sbOut = scoreBox.AddComponent<Outline>();
-        sbOut.effectColor = new Color(0.32f, 0.74f, 0.92f, 0.5f);
-        sbOut.effectDistance = new Vector2(2f, -2f);
+        sbOut.effectColor = new Color(0.05f, 0.04f, 0.09f, 0.5f);
+        sbOut.effectDistance = new Vector2(1f, -1f);
 
         Text finalScoreTxt = CreateUIText("Text_FinalScore", scoreBox.transform, defaultBodyFont, "FINAL SCORE: 0", 36, TextAnchor.MiddleCenter, Color.white);
         finalScoreTxt.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 34f);
@@ -2145,40 +2181,38 @@ public static class BuildMainGameScene
             font,
             iconDifficultySprite,
             "MODES",
-            new Vector2(-228f, -242f),
-            new Vector2(180f, 144f),
-            new Vector2(64f, 64f),
-            new Color(0.68f, 0.44f, 0.16f, 1f),
+            new Vector2(-236f, -250f),
+            new Vector2(184f, 172f),
+            new Vector2(54f, 54f),
+            new Color(0.92f, 0.58f, 0.14f, 1f),
             21
         );
         uiMgr.btnChangeDifficulty = btnChangeDiff;
 
-        // 2. HOME (Opens Home Screen!)
         Button btnGoHome = CreateUIIconTileButton(
             "Button_GameOverHome",
             dialogBox.transform,
             font,
             iconHomeSprite,
             "HOME",
-            new Vector2(0f, -242f),
-            new Vector2(180f, 144f),
-            new Vector2(64f, 64f),
-            new Color(0.24f, 0.20f, 0.32f, 1f),
+            new Vector2(0f, -250f),
+            new Vector2(184f, 172f),
+            new Vector2(54f, 54f),
+            new Color(0.44f, 0.34f, 0.64f, 1f),
             21
         );
         uiMgr.btnGameOverHome = btnGoHome;
 
-        // 3. EXIT (Quits App!)
         Button btnQuit = CreateUIIconTileButton(
             "Button_Quit",
             dialogBox.transform,
             font,
             iconExitSprite,
             "EXIT",
-            new Vector2(228f, -242f),
-            new Vector2(180f, 144f),
-            new Vector2(64f, 64f),
-            new Color(0.44f, 0.19f, 0.20f, 1f),
+            new Vector2(236f, -250f),
+            new Vector2(184f, 172f),
+            new Vector2(54f, 54f),
+            new Color(0.82f, 0.24f, 0.28f, 1f),
             21
         );
         uiMgr.btnQuit = btnQuit;
@@ -2518,15 +2552,20 @@ public static class BuildMainGameScene
         gbcRect.sizeDelta = new Vector2(940f, 1340f);
 
         Image gbcBg = gbCard.AddComponent<Image>();
-        gbcBg.color = new Color(0.14f, 0.11f, 0.19f, 0.98f);
-        if (roundedFrameSprite != null)
+        gbcBg.color = Color.white;
+        if (masterContainerSprite != null)
+        {
+            gbcBg.sprite = masterContainerSprite;
+            gbcBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             gbcBg.sprite = roundedFrameSprite;
             gbcBg.type = Image.Type.Sliced;
         }
         Outline gbcOut = gbCard.AddComponent<Outline>();
-        gbcOut.effectColor = new Color(0.95f, 0.76f, 0.32f, 1f);
-        gbcOut.effectDistance = new Vector2(6f, -6f);
+        gbcOut.effectColor = new Color(0.05f, 0.04f, 0.08f, 0.75f);
+        gbcOut.effectDistance = new Vector2(4f, -4f);
 
         Text gbTitle = CreateUIText("Text_GuidebookTitle", gbCard.transform, font, "SLIME ALMANAC & GUIDE", 36, TextAnchor.MiddleCenter, new Color(0.52f, 0.98f, 0.68f, 1f));
         gbTitle.resizeTextForBestFit = true;
@@ -2544,8 +2583,8 @@ public static class BuildMainGameScene
         Button[] tabBtns = new Button[4];
         for (int i = 0; i < 4; i++)
         {
-            float xPos = -324f + i * 216f;
-            tabBtns[i] = CreateUIButton($"Button_Tab_{tabNames[i]}", gbCard.transform, font, tabNames[i], new Vector2(xPos, 462f), new Vector2(196f, 76f), new Color(0.15f, 0.19f, 0.28f, 0.96f), 18);
+            float xPos = -315f + i * 210f;
+            tabBtns[i] = CreateUISegmentedChipButton($"Button_Tab_{tabNames[i]}", gbCard.transform, font, tabNames[i], new Vector2(xPos, 462f), new Vector2(202f, 62f), new Color(0.12f, 0.13f, 0.20f, 0.95f), 20);
         }
         uiMgr.btnGuidebookTabs = tabBtns;
 
@@ -2741,15 +2780,20 @@ public static class BuildMainGameScene
         dpcRect.sizeDelta = new Vector2(900f, 1260f);
 
         Image dpcBg = dpCard.AddComponent<Image>();
-        dpcBg.color = new Color(0.12f, 0.10f, 0.17f, 0.98f);
-        if (roundedFrameSprite != null)
+        dpcBg.color = Color.white;
+        if (masterContainerSprite != null)
+        {
+            dpcBg.sprite = masterContainerSprite;
+            dpcBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             dpcBg.sprite = roundedFrameSprite;
             dpcBg.type = Image.Type.Sliced;
         }
         Outline dpcOut = dpCard.AddComponent<Outline>();
-        dpcOut.effectColor = new Color(0.96f, 0.78f, 0.35f, 1f);
-        dpcOut.effectDistance = new Vector2(6f, -6f);
+        dpcOut.effectColor = new Color(0.05f, 0.04f, 0.08f, 0.75f);
+        dpcOut.effectDistance = new Vector2(4f, -4f);
 
         // 1. Category Badge Header
         GameObject badgeObj = CreateUIElement("Badge_Container", dpCard.transform);
@@ -2802,15 +2846,20 @@ public static class BuildMainGameScene
         sbRect.anchoredPosition = new Vector2(0f, 205f);
         sbRect.sizeDelta = new Vector2(840f, 66f);
         Image sbBg = statsBox.AddComponent<Image>();
-        sbBg.color = new Color(0.18f, 0.15f, 0.24f, 0.95f);
-        if (roundedFrameSprite != null)
+        sbBg.color = Color.white;
+        if (recessedWellSprite != null)
+        {
+            sbBg.sprite = recessedWellSprite;
+            sbBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             sbBg.sprite = roundedFrameSprite;
             sbBg.type = Image.Type.Sliced;
         }
         Outline sbOut = statsBox.AddComponent<Outline>();
-        sbOut.effectColor = new Color(0.35f, 0.78f, 0.92f, 0.65f);
-        sbOut.effectDistance = new Vector2(2f, -2f);
+        sbOut.effectColor = new Color(0.05f, 0.04f, 0.09f, 0.5f);
+        sbOut.effectDistance = new Vector2(1f, -1f);
 
         Text statsTxt = CreateUIText("Text_DetailStats", statsBox.transform, defaultBodyFont, "+10 PTS  •  BUILD COMBO STREAK", 28, TextAnchor.MiddleCenter, new Color(0.50f, 0.98f, 0.65f, 1f));
         RectTransform stRect = statsTxt.GetComponent<RectTransform>();
@@ -2825,8 +2874,13 @@ public static class BuildMainGameScene
         dbRect.anchoredPosition = new Vector2(0f, 25f);
         dbRect.sizeDelta = new Vector2(840f, 250f);
         Image dbBg = descBox.AddComponent<Image>();
-        dbBg.color = new Color(0.15f, 0.12f, 0.21f, 0.95f);
-        if (roundedFrameSprite != null)
+        dbBg.color = Color.white;
+        if (recessedWellSprite != null)
+        {
+            dbBg.sprite = recessedWellSprite;
+            dbBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             dbBg.sprite = roundedFrameSprite;
             dbBg.type = Image.Type.Sliced;
@@ -2856,15 +2910,20 @@ public static class BuildMainGameScene
         tbRect.anchoredPosition = new Vector2(0f, -230f);
         tbRect.sizeDelta = new Vector2(840f, 210f);
         Image tbBg = tipsBox.AddComponent<Image>();
-        tbBg.color = new Color(0.20f, 0.17f, 0.12f, 0.95f);
-        if (roundedFrameSprite != null)
+        tbBg.color = Color.white;
+        if (recessedWellSprite != null)
+        {
+            tbBg.sprite = recessedWellSprite;
+            tbBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             tbBg.sprite = roundedFrameSprite;
             tbBg.type = Image.Type.Sliced;
         }
         Outline tbOut = tipsBox.AddComponent<Outline>();
-        tbOut.effectColor = new Color(0.95f, 0.80f, 0.35f, 0.85f);
-        tbOut.effectDistance = new Vector2(2f, -2f);
+        tbOut.effectColor = new Color(0.05f, 0.04f, 0.09f, 0.5f);
+        tbOut.effectDistance = new Vector2(1f, -1f);
 
         Text tipsLbl = CreateUIText("Label_Tips", tipsBox.transform, defaultBodyFont, "PRO STRATEGY TIP", 26, TextAnchor.MiddleLeft, new Color(1f, 0.92f, 0.45f, 1f));
         tipsLbl.GetComponent<RectTransform>().anchoredPosition = new Vector2(24f, 74f);
@@ -2921,15 +2980,20 @@ public static class BuildMainGameScene
         cpcRect.sizeDelta = new Vector2(760f, 460f);
 
         Image cpcBg = cpCard.AddComponent<Image>();
-        cpcBg.color = new Color(0.13f, 0.10f, 0.18f, 0.98f);
-        if (roundedFrameSprite != null)
+        cpcBg.color = Color.white;
+        if (masterContainerSprite != null)
+        {
+            cpcBg.sprite = masterContainerSprite;
+            cpcBg.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
         {
             cpcBg.sprite = roundedFrameSprite;
             cpcBg.type = Image.Type.Sliced;
         }
         Outline cpcOutline = cpCard.AddComponent<Outline>();
-        cpcOutline.effectColor = new Color(0.95f, 0.78f, 0.35f, 1f);
-        cpcOutline.effectDistance = new Vector2(5f, -5f);
+        cpcOutline.effectColor = new Color(0.05f, 0.04f, 0.08f, 0.75f);
+        cpcOutline.effectDistance = new Vector2(4f, -4f);
 
         // Header Accent Strip
         GameObject strip = CreateUIElement("Header_Strip", cpCard.transform);
@@ -3287,7 +3351,7 @@ public static class BuildMainGameScene
         {
             float iconMargin = 28f;
             float iconX = -buttonSize.x * 0.5f + iconSize.x * 0.5f + iconMargin;
-            CreateUISpriteIcon("Icon_Graphic", btnObj.transform, iconSprite, new Vector2(iconX, 2f), iconSize);
+            CreateUISpriteIcon("Icon_Graphic", btnObj.transform, iconSprite, new Vector2(iconX, 6f), iconSize);
         }
 
         Text labelTxt = CreateUIText("Text_Label", btnObj.transform, font, label, fontSize, TextAnchor.MiddleCenter, Color.white);
@@ -3295,8 +3359,8 @@ public static class BuildMainGameScene
         lRect.anchorMin = Vector2.zero;
         lRect.anchorMax = Vector2.one;
         float symMargin = iconSprite != null ? (iconSize.x + 36f) : 20f;
-        lRect.offsetMin = new Vector2(symMargin, 4f);
-        lRect.offsetMax = new Vector2(-symMargin, 4f);
+        lRect.offsetMin = new Vector2(symMargin, 8f);
+        lRect.offsetMax = new Vector2(-symMargin, 8f);
 
         return btn;
     }
@@ -3332,16 +3396,23 @@ public static class BuildMainGameScene
 
         if (iconSprite != null)
         {
-            CreateUISpriteIcon("Icon_Graphic", btnObj.transform, iconSprite, new Vector2(0f, 20f), iconSize);
+            // Position icon comfortably in upper portion of the tile face
+            CreateUISpriteIcon("Icon_Graphic", btnObj.transform, iconSprite, new Vector2(0f, 28f), iconSize);
         }
 
-        Text labelTxt = CreateUIText("Text_Label", btnObj.transform, font, caption, captionFontSize, TextAnchor.MiddleCenter, new Color(1f, 0.98f, 0.90f, 1f));
+        Text labelTxt = CreateUIText("Text_Label", btnObj.transform, font, caption, captionFontSize, TextAnchor.MiddleCenter, new Color(1f, 0.98f, 0.92f, 1f));
+        labelTxt.raycastTarget = false;
         RectTransform lRect = labelTxt.GetComponent<RectTransform>();
         lRect.anchorMin = new Vector2(0f, 0f);
         lRect.anchorMax = new Vector2(1f, 0f);
         lRect.pivot = new Vector2(0.5f, 0f);
-        lRect.anchoredPosition = new Vector2(0f, 14f);
-        lRect.sizeDelta = new Vector2(0f, 32f);
+        lRect.anchoredPosition = new Vector2(0f, 24f);
+        lRect.sizeDelta = new Vector2(0f, 28f);
+
+        // Add subtle shadow for crisp pixel-art readability
+        Shadow txtShadow = labelTxt.gameObject.AddComponent<Shadow>();
+        txtShadow.effectColor = new Color(0f, 0f, 0f, 0.85f);
+        txtShadow.effectDistance = new Vector2(1.5f, -1.5f);
 
         return btn;
     }
@@ -3377,7 +3448,7 @@ public static class BuildMainGameScene
         {
             float iconMargin = 32f;
             float iconX = -size.x * 0.5f + 54f * 0.5f + iconMargin;
-            CreateUISpriteIcon("Icon_Play", btnObj.transform, playIcon, new Vector2(iconX, 4f), new Vector2(54f, 54f));
+            CreateUISpriteIcon("Icon_Play", btnObj.transform, playIcon, new Vector2(iconX, 8f), new Vector2(54f, 54f));
         }
 
         Text titleTxt = CreateUIText("Text_ModeTitle", btnObj.transform, defaultBodyFont, title, 32, TextAnchor.MiddleCenter, Color.white);
@@ -3388,7 +3459,7 @@ public static class BuildMainGameScene
         tRect.anchorMin = new Vector2(0.5f, 0.5f);
         tRect.anchorMax = new Vector2(0.5f, 0.5f);
         tRect.pivot = new Vector2(0.5f, 0.5f);
-        tRect.anchoredPosition = new Vector2(0f, 25f);
+        tRect.anchoredPosition = new Vector2(0f, 28f);
         tRect.sizeDelta = new Vector2(size.x - 140f, 52f);
 
         Text subTxt = CreateUIText("Text_ModeDesc", btnObj.transform, defaultBodyFont, subtitle, 24, TextAnchor.MiddleCenter, new Color(1f, 0.96f, 0.84f, 0.95f));
@@ -3402,7 +3473,7 @@ public static class BuildMainGameScene
         sRect.anchorMin = new Vector2(0.5f, 0.5f);
         sRect.anchorMax = new Vector2(0.5f, 0.5f);
         sRect.pivot = new Vector2(0.5f, 0.5f);
-        sRect.anchoredPosition = new Vector2(0f, -24f);
+        sRect.anchoredPosition = new Vector2(0f, -16f);
         sRect.sizeDelta = new Vector2(size.x - 140f, 52f);
 
         return btn;
@@ -3433,6 +3504,51 @@ public static class BuildMainGameScene
         shadow.effectColor = new Color(0f, 0f, 0f, 0.85f);
         shadow.effectDistance = new Vector2(3f, -3f);
         return txt;
+    }
+
+    private static Button CreateUISegmentedChipButton(string name, Transform parent, Font font, string label, Vector2 anchoredPos, Vector2 size, Color bgColor, int fontSize = 20)
+    {
+        GameObject btnObj = CreateUIElement(name, parent);
+        RectTransform rect = btnObj.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = anchoredPos;
+        rect.sizeDelta = size;
+
+        Image img = btnObj.AddComponent<Image>();
+        img.color = bgColor;
+        if (segmentedTabChipSprite != null)
+        {
+            img.sprite = segmentedTabChipSprite;
+            img.type = Image.Type.Sliced;
+        }
+        else if (roundedFrameSprite != null)
+        {
+            img.sprite = roundedFrameSprite;
+            img.type = Image.Type.Sliced;
+        }
+
+        Outline ol = btnObj.AddComponent<Outline>();
+        ol.effectColor = new Color(0.18f, 0.19f, 0.28f, 0.9f);
+        ol.effectDistance = new Vector2(2f, -2f);
+
+        Button btn = btnObj.AddComponent<Button>();
+        btn.targetGraphic = img;
+        btnObj.AddComponent<UIButtonJuice>();
+
+        Text labelTxt = CreateUIText("Text_Label", btnObj.transform, font, label, fontSize, TextAnchor.MiddleCenter, Color.white);
+        RectTransform lRect = labelTxt.GetComponent<RectTransform>();
+        lRect.anchorMin = Vector2.zero;
+        lRect.anchorMax = Vector2.one;
+        lRect.offsetMin = Vector2.zero;
+        lRect.offsetMax = Vector2.zero;
+
+        Shadow txtShadow = labelTxt.gameObject.AddComponent<Shadow>();
+        txtShadow.effectColor = new Color(0f, 0f, 0f, 0.85f);
+        txtShadow.effectDistance = new Vector2(1f, -1f);
+
+        return btn;
     }
 
     private static Button CreateUIButton(string name, Transform parent, Font font, string label, Vector2 anchoredPos, Vector2 size, Color bgColor, int fontSize = 36)

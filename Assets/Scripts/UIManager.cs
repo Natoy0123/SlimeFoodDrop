@@ -2656,85 +2656,53 @@ public class UIManager : MonoBehaviour
 
         {
 
-            Color activeBg = new Color(0.20f, 0.68f, 0.92f, 1f);
-
-            Color inactiveBg = new Color(0.15f, 0.19f, 0.28f, 0.96f);
-
+            Color[] categoryActiveColors = new Color[]
+            {
+                new Color(0.18f, 0.80f, 0.44f, 1f), // FOODS: Vibrant Emerald
+                new Color(0.91f, 0.30f, 0.24f, 1f), // POISONS: Crimson Red
+                new Color(0.95f, 0.61f, 0.07f, 1f), // POWER-UPS: Golden Amber
+                new Color(0.20f, 0.60f, 0.86f, 1f)  // STAGES: Cyber Cyan
+            };
+            Color inactiveBg = new Color(0.12f, 0.13f, 0.20f, 0.95f);
             Color activeOutline = new Color(1.0f, 0.88f, 0.36f, 1f);
-
-            Color inactiveOutline = new Color(0.06f, 0.05f, 0.09f, 0.95f);
-
-
+            Color inactiveOutline = new Color(0.18f, 0.19f, 0.28f, 0.9f);
 
             for (int i = 0; i < btnGuidebookTabs.Length; i++)
-
             {
-
                 Button tabBtn = btnGuidebookTabs[i];
-
                 if (tabBtn == null) continue;
-
                 bool isSelected = (i == tabIndex);
-
+                Color activeBg = (i >= 0 && i < categoryActiveColors.Length) ? categoryActiveColors[i] : new Color(0.20f, 0.68f, 0.92f, 1f);
                 Color targetBg = isSelected ? activeBg : inactiveBg;
 
-
-
                 Image img = tabBtn.GetComponent<Image>();
-
                 if (img != null)
-
                 {
-
                     img.color = targetBg;
-
                 }
-
-
 
                 // Update UIButtonJuice baseColor so OnPointerUp / OnPointerExit never wipes out the active tab highlight!
-
                 UIButtonJuice juice = tabBtn.GetComponent<UIButtonJuice>();
-
                 if (juice != null)
-
                 {
-
                     juice.SetBaseColor(targetBg);
-
                 }
-
-
 
                 Outline ol = tabBtn.GetComponent<Outline>();
-
                 if (ol != null)
-
                 {
-
                     ol.effectColor = isSelected ? activeOutline : inactiveOutline;
-
                 }
 
-
-
                 Transform lblTr = tabBtn.transform.Find("Text_Label");
-
                 if (lblTr != null)
-
                 {
-
                     Text lbl = lblTr.GetComponent<Text>();
-
                     if (lbl != null)
-
                     {
-
                         lbl.color = isSelected
-
-                            ? new Color(1f, 0.98f, 0.82f, 1f)
-
-                            : new Color(0.76f, 0.82f, 0.90f, 0.92f);
+                            ? Color.white
+                            : new Color(0.68f, 0.70f, 0.82f, 1f);
 
                     }
 
